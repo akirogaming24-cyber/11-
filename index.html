@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>11В Анги Portal</title>
+<style>
+body {
+    margin:0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to top, #0e3a8a, #3b82f6);
+    color: white;
+}
+#loginPage {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+.loginBox{
+    background:#1e293b;
+    padding:40px;
+    border-radius:12px;
+    text-align:center;
+    width:320px;
+    box-shadow:0 0 20px rgba(0,0,0,0.5);
+}
+input{
+    width:90%;
+    padding:10px;
+    margin:10px 0;
+    border:none;
+    border-radius:6px;
+}
+button{
+    padding:10px 20px;
+    background:#38bdf8;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+}
+button:hover{
+    background:#0ea5e9;
+}
+#dashboard{
+    display:none;
+    text-align:center;
+    padding:20px;
+}
+#welcome{
+    font-size:28px;
+    font-weight:bold;
+    color:#60a5fa;
+    margin-bottom:10px;
+    animation:fadeIn 1.5s;
+}
+#dayGreet{
+    font-size:18px;
+    margin-bottom:20px;
+    animation:fadeIn 2s;
+}
+.days{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:25px;
+}
+.dayBtn{
+    padding:8px 14px;
+    background: rgba(30,41,59,0.8);
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+}
+.dayBtn:hover{
+    background: rgba(59,130,246,0.8);
+}
+#scheduleBox{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+}
+.cell{
+    width:90%;
+    max-width:600px;
+    padding:12px;
+    border-radius:10px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.3);
+    text-align:left;
+    font-weight:bold;
+    transition:0.3s;
+}
+.cell:hover{
+    transform: scale(1.02);
+    box-shadow:0 6px 20px rgba(0,0,0,0.5);
+}
+.monhol{background:#ef4444;}
+.angli{background:#facc15;}
+.mat{background:#3b82f6;}
+.biolog{background:#10b981;}
+.uro{background:#8b5cf6;}
+.other{background:#6b7280;}
+.break{background:#facc15; color:#000;}
+@media(max-width:768px){
+    #scheduleBox{width:95%;}
+}
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+.logout{
+    margin-top:25px;
+    padding:10px 20px;
+    border:none;
+    border-radius:6px;
+    background:#ef4444;
+    cursor:pointer;
+}
+.logout:hover{opacity:.9;}
+/* Footer position */
+#footer{
+    position:fixed;
+    bottom:10px;
+    right:15px;
+    color:white;
+    opacity:0.6;
+    font-size:14px;
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginPage">
+<div class="loginBox">
+<h2>11В Анги - Нэвтрэх</h2>
+<input id="username" placeholder="Нэвтрэх нэр">
+<input id="password" type="password" placeholder="Password">
+<button onclick="login()">Нэвтрэх</button>
+<p id="error" style="color:red"></p>
+</div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+<h1 id="welcome"></h1>
+<div id="dayGreet"></div>
+
+<div class="days">
+<button class="dayBtn" onclick="showDay('davaa')">Даваа</button>
+<button class="dayBtn" onclick="showDay('mygmar')">Мягмар</button>
+<button class="dayBtn" onclick="showDay('lhagva')">Лхагва</button>
+<button class="dayBtn" onclick="showDay('purev')">Пүрэв</button>
+<button class="dayBtn" onclick="showDay('baasan')">Баасан</button>
+</div>
+
+<div id="scheduleBox"></div>
+
+<button class="logout" onclick="logout()">Гарах</button>
+</div>
+
+<!-- Footer -->
+<div id="footer">Made by: Anha</div>
+
+<script>
+const users=[
+"С. Лхам","Азбаяр","Аззаяа","Алтаншагай","Алунгоо","Амаржаргал","Амин-Эрдэнэ",
+"Анударь","Анхбат","Баттулга","Батцэцэг","Даваажаргал","Дэмбэрэл","Ирмүүн",
+"Лхагважаргал","Мөнхбилэг","Мөнхзаяа","Мөнхжин","Мөнххүслэн","Мөнхдэлгэр",
+"Насандэлгэр","Мөнхчимэг","Номин","Номингоо","Номин-Эрдэнэ","Одонтунгалаг",
+"Оюунболор","Сайханбаяр","Санчирмаа","Соёмбо","Төгсбилгүүн","Тэргэлсаран",
+"Халиун","Ханхүслэн","Хувьтөгөлдөр","Чингүүн","Эгшиг","Энхболор","Энхзаяа",
+"Энхмөнх","Энххүслэн","Эрхлэн","Эрххулан","Өсөхбаяр","Золбаяр","Уранзаяа","Хулан"
+];
+const scheduleData={
+davaa:[
+{time:"7:40-8:20", subject:"Монгол хэл", color:"monhol"},
+{time:"8:20-9:00", subject:"Уран зохиол", color:"uro"},
+{time:"9:05-9:45", subject:"Англи хэл", color:"angli"},
+{time:"9:45-10:25", subject:"Англи хэл", color:"angli"},
+{time:"10:25-10:35", subject:"Завсарлага", color:"break"},
+{time:"10:35-11:15", subject:"Биологи", color:"biolog"},
+{time:"11:15-11:55", subject:"Биологи", color:"biolog"},
+{time:"12:00-12:40", subject:"Математик", color:"mat"}
+],
+mygmar:[
+{time:"7:40-8:20", subject:"Эрүүл мэнд", color:"other"},
+{time:"8:20-9:00", subject:"Математик", color:"mat"},
+{time:"9:05-9:45", subject:"Дизайн", color:"other"},
+{time:"9:45-10:25", subject:"Дизайн", color:"other"},
+{time:"10:25-10:35", subject:"Завсарлага", color:"break"},
+{time:"10:35-11:15", subject:"Монгол бичиг", color:"monhol"},
+{time:"11:15-11:55", subject:"Монгол бичиг", color:"monhol"},
+{time:"12:00-12:40", subject:"Мэдээлэл технологи", color:"other"}
+],
+lhagva:[
+{time:"7:40-8:20", subject:"Газарзүй", color:"other"},
+{time:"8:20-9:00", subject:"Газарзүй", color:"other"},
+{time:"9:05-9:45", subject:"Математик", color:"mat"},
+{time:"9:45-10:25", subject:"Математик", color:"mat"},
+{time:"10:25-10:35", subject:"Завсарлага", color:"break"},
+{time:"10:35-11:15", subject:"Биеийн тамир", color:"other"},
+{time:"11:15-11:55", subject:"Биеийн тамир", color:"other"},
+{time:"12:00-12:40", subject:"Нийгэм (сонгон)", color:"other"}
+],
+purev:[
+{time:"7:40-8:20", subject:"Нийгэм", color:"other"},
+{time:"8:20-9:00", subject:"Нийгэм", color:"other"},
+{time:"9:05-9:45", subject:"Түүх", color:"other"},
+{time:"9:45-10:25", subject:"Иргэний ёс", color:"other"},
+{time:"10:25-10:35", subject:"Завсарлага", color:"break"},
+{time:"10:35-11:15", subject:"Физик", color:"other"},
+{time:"11:15-11:55", subject:"Физик", color:"other"},
+{time:"12:00-12:40", subject:"", color:"other"}
+],
+baasan:[
+{time:"7:40-8:20", subject:"Хими", color:"other"},
+{time:"8:20-9:00", subject:"Хими", color:"other"},
+{time:"9:05-9:45", subject:"Англи хэл", color:"angli"},
+{time:"9:45-10:25", subject:"Англи хэл", color:"angli"},
+{time:"10:25-10:35", subject:"Завсарлага", color:"break"},
+{time:"10:35-11:15", subject:"Монгол хэл (сонгон)", color:"monhol"},
+{time:"11:15-11:55", subject:"Монгол хэл (сонгон)", color:"monhol"},
+{time:"12:00-12:40", subject:"Цахим Англи хэл", color:"angli"}
+]
+};
+function login(){
+let u=document.getElementById("username").value
+let p=document.getElementById("password").value
+if(users.includes(u) && p==="1234"){
+document.getElementById("loginPage").style.display="none";
+document.getElementById("dashboard").style.display="block";
+let now=new Date();
+let hour=now.getHours();
+let greet="Танд энэ өдрийн мэнд хүргэе";
+if(hour<12) greet="Өглөөний мэнд";
+else if(hour<18) greet="Өдрийн мэнд";
+else greet="Оройн мэнд";
+document.getElementById("welcome").innerText="Сайн байна уу эрхэм "+u;
+document.getElementById("dayGreet").innerText=greet;
+showDay('davaa');
+}else{
+document.getElementById("error").innerText="Нэр эсвэл password буруу";
+}
+}
+function logout(){location.reload()}
+function showDay(day){
+let box=document.getElementById("scheduleBox");
+box.innerHTML="";
+scheduleData[day].forEach(item=>{
+    let div=document.createElement("div");
+    div.className="cell "+item.color;
+    div.innerHTML=`<strong>${item.subject}</strong> <span style="float:right">${item.time}</span>`;
+    box.appendChild(div);
+});
+}
+</script>
+</body>
+</html>
