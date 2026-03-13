@@ -97,13 +97,24 @@ button:hover{
     transform: scale(1.02);
     box-shadow:0 6px 20px rgba(0,0,0,0.5);
 }
-.monhol{background:#ef4444;}
-.angli{background:#facc15;}
-.mat{background:#3b82f6;}
-.biolog{background:#10b981;}
-.uro{background:#8b5cf6;}
-.other{background:#6b7280;}
-.break{background:#facc15; color:#000;}
+/* Colors by subject */
+.monhol{background:#ef4444;}       /* Монгол хэл */
+.angli{background:#facc15;}        /* Англи хэл */
+.mat{background:#3b82f6;}          /* Математик */
+.biolog{background:#10b981;}       /* Биологи */
+.uro{background:#8b5cf6;}          /* Уран зохиол */
+.niigem{background:#3b82f6;}       /* Нийгэм */
+.tuuh{background:#ef4444;}         /* Түүх */
+.irgen{background:#10b981;}        /* Иргэний ёс */
+.dizain{background:#f472b6;}       /* Дизайн */
+.eruul{background:#fbbf24;}        /* Эрүүл мэнд */
+.gazar{background:#60a5fa;}        /* Газарзүй */
+.btamir{background:#f97316;}       /* Биеийн тамир */
+.fizik{background:#8b5cf6;}        /* Физик */
+.himi{background:#06b6d4;}         /* Хими */
+.info{background:#9ca3af;}          /* Мэдээлэл технологи */
+.break{background:#facc15; color:#000;} /* Завсарлага */
+
 @media(max-width:768px){
     #scheduleBox{width:95%;}
 }
@@ -175,6 +186,7 @@ const users=[
 "Халиун","Ханхүслэн","Хувьтөгөлдөр","Чингүүн","Эгшиг","Энхболор","Энхзаяа",
 "Энхмөнх","Энххүслэн","Эрхлэн","Эрххулан","Өсөхбаяр","Золбаяр","Уранзаяа","Хулан"
 ];
+
 const scheduleData={
 davaa:[
 {time:"7:40-8:20", subject:"Монгол хэл", color:"monhol"},
@@ -187,38 +199,40 @@ davaa:[
 {time:"12:00-12:40", subject:"Математик", color:"mat"}
 ],
 mygmar:[
-{time:"7:40-8:20", subject:"Эрүүл мэнд", color:"other"},
+{time:"7:40-8:20", subject:"Эрүүл мэнд", color:"eruul"},
 {time:"8:20-9:00", subject:"Математик", color:"mat"},
-{time:"9:05-9:45", subject:"Дизайн", color:"other"},
-{time:"9:45-10:25", subject:"Дизайн", color:"other"},
+{time:"9:05-9:45", subject:"Дизайн", color:"dizain"},
+{time:"9:45-10:25", subject:"Дизайн", color:"dizain"},
 {time:"10:25-10:35", subject:"Завсарлага", color:"break"},
 {time:"10:35-11:15", subject:"Монгол бичиг", color:"monhol"},
 {time:"11:15-11:55", subject:"Монгол бичиг", color:"monhol"},
-{time:"12:00-12:40", subject:"Мэдээлэл технологи", color:"other"}
+{time:"12:00-12:40", subject:"Мэдээлэл технологи", color:"info"}
 ],
 lhagva:[
-{time:"7:40-8:20", subject:"Газарзүй", color:"other"},
-{time:"8:20-9:00", subject:"Газарзүй", color:"other"},
+{time:"7:40-8:20", subject:"Газарзүй", color:"gazar"},
+{time:"8:20-9:00", subject:"Газарзүй", color:"gazar"},
 {time:"9:05-9:45", subject:"Математик", color:"mat"},
 {time:"9:45-10:25", subject:"Математик", color:"mat"},
 {time:"10:25-10:35", subject:"Завсарлага", color:"break"},
-{time:"10:35-11:15", subject:"Биеийн тамир", color:"other"},
-{time:"11:15-11:55", subject:"Биеийн тамир", color:"other"},
-{time:"12:00-12:40", subject:"Нийгэм (сонгон)", color:"other"}
+{time:"10:35-11:15", subject:"Биеийн тамир", color:"btamir"},
+{time:"11:15-11:55", subject:"Биеийн тамир", color:"btamir"},
+{time:"12:00-12:40", subject:"Нийгэм", color:"niigem"},
+{time:"12:40-13:20", subject:"Түүх", color:"tuuh"},
+{time:"13:20-14:00", subject:"Иргэний ёс", color:"irgen"}
 ],
 purev:[
-{time:"7:40-8:20", subject:"Нийгэм", color:"other"},
-{time:"8:20-9:00", subject:"Нийгэм", color:"other"},
-{time:"9:05-9:45", subject:"Түүх", color:"other"},
-{time:"9:45-10:25", subject:"Иргэний ёс", color:"other"},
+{time:"7:40-8:20", subject:"Нийгэм", color:"niigem"},
+{time:"8:20-9:00", subject:"Нийгэм", color:"niigem"},
+{time:"9:05-9:45", subject:"Түүх", color:"tuuh"},
+{time:"9:45-10:25", subject:"Иргэний ёс", color:"irgen"},
 {time:"10:25-10:35", subject:"Завсарлага", color:"break"},
-{time:"10:35-11:15", subject:"Физик", color:"other"},
-{time:"11:15-11:55", subject:"Физик", color:"other"},
+{time:"10:35-11:15", subject:"Физик", color:"fizik"},
+{time:"11:15-11:55", subject:"Физик", color:"fizik"},
 {time:"12:00-12:40", subject:"", color:"other"}
 ],
 baasan:[
-{time:"7:40-8:20", subject:"Хими", color:"other"},
-{time:"8:20-9:00", subject:"Хими", color:"other"},
+{time:"7:40-8:20", subject:"Хими", color:"himi"},
+{time:"8:20-9:00", subject:"Хими", color:"himi"},
 {time:"9:05-9:45", subject:"Англи хэл", color:"angli"},
 {time:"9:45-10:25", subject:"Англи хэл", color:"angli"},
 {time:"10:25-10:35", subject:"Завсарлага", color:"break"},
@@ -227,6 +241,7 @@ baasan:[
 {time:"12:00-12:40", subject:"Цахим Англи хэл", color:"angli"}
 ]
 };
+
 function login(){
 let u=document.getElementById("username").value
 let p=document.getElementById("password").value
@@ -246,7 +261,9 @@ showDay('davaa');
 document.getElementById("error").innerText="Нэр эсвэл password буруу";
 }
 }
+
 function logout(){location.reload()}
+
 function showDay(day){
 let box=document.getElementById("scheduleBox");
 box.innerHTML="";
